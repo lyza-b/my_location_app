@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_location_app/utils/constants/texts.dart';
 
 void main() {
   runApp(
@@ -25,9 +26,30 @@ class HomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('Flutter Riverpod'),
+        backgroundColor: const Color.fromARGB(255, 7, 36, 60),
+        title: const Text(
+          ConstantTexts.appBarTitle,
+          style: TextStyle(
+              color: Colors.white, fontWeight: FontWeight.w600, fontSize: 20),
+        ),
         centerTitle: true,
+      ),
+      body: const Column(
+        children: [
+          TextField(
+            mouseCursor: SystemMouseCursors.contextMenu,
+            decoration: InputDecoration(
+              suffixIcon: Icon(
+                Icons.search,
+                color: Colors.blue,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(4.0)),
+              ),
+              hintText: ConstantTexts.hintText,
+            ),
+          )
+        ],
       ),
     );
   }

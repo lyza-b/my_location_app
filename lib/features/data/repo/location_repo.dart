@@ -3,12 +3,12 @@ import 'package:my_location_app/features/data/services/location_service.dart';
 
 class LocationRepo {
   final LocationService _locationService;
-  
+
 // Ask Akovoyon why this is done this way
-  LocationRepo({required LocationService? locationService})
+  LocationRepo({LocationService? locationService})
       : _locationService = locationService ?? LocationService();
 
-  Future<List<LocationModel>> getLocation() async {
-    return await _locationService.getLocation();
+  Future<List<LocationModel>> getLocation(String text) async {
+    return await _locationService.getLocation(text);
   }
 }

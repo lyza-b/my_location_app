@@ -9,14 +9,14 @@ class MainScreenView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
-final m = ref.watch(mainProviderCtrl);
-
-    final location = "Location";
-    return Column(
+   
+    return Consumer(
+      builder: (context, ref, child) {
+    final m = ref.watch(mainProviderCtrl);
+        return  Column(
         children: [
           TextField(
-            controller: m.searchController,
+            controller:m.searchController,
             decoration: const InputDecoration(
               suffixIcon: Icon(
                 Icons.search,
@@ -25,10 +25,13 @@ final m = ref.watch(mainProviderCtrl);
               hintText: ConstantTexts.hintText,
             ),
             onChanged: (e) {
-             ref.read(mainProviderCtrl).updateVisibility();
+              ref.read(mainProviderCtrl).updateVisibility();
+  m.getLocation();
+
+
+
             },
           ),
-
           Visibility(
             visible: m.visible,
             child: ListView.builder(
@@ -36,23 +39,22 @@ final m = ref.watch(mainProviderCtrl);
               physics: const AlwaysScrollableScrollPhysics(
                 parent: BouncingScrollPhysics(),
               ),
-              itemBuilder: (context, ref) {
+              itemBuilder: (context, index) {
                 return ListTile(
-                  leading: Text(location),
-                  title: Text(location),
+                     onTap: () {},
+                 // leading: Text("location$index"),
+                  title: Text( m.list[index].description),
                   trailing: const Icon(Icons.my_location),
-                  onTap: () {},
-                  dense: false,
                 );
               },
-              itemCount: location.length,
+              itemCount: m.list.length,
             ),
           ),
 
           8.verticalSpace,
-          
+
           Visibility(
-            visible:!m.visible,
+            visible: !m.visible,
             child: Container(
               // margin: const EdgeInsets.all(14),
               //padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
@@ -83,5 +85,10 @@ final m = ref.watch(mainProviderCtrl);
           ),
         ],
       );
+          
+      
+      },
+     
+    );
   }
 }

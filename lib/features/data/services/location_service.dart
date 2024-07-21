@@ -6,10 +6,10 @@ import 'package:my_location_app/features/domain/location_model.dart';
 import 'package:my_location_app/features/utils/app_utils/key.dart';
 
 class LocationService {
-  Future<List<LocationModel>> getLocation() async {
+  Future<List<LocationModel>> getLocation(String text) async {
     List<LocationModel> list = [];
-    const url =
-        "https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${AppUtils.locationKey}";
+ String  url =
+        "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$text&key=${AppUtils.locationKey}";
 
     final response = await http.get(Uri.parse(url));
     if (response.statusCode < 300) {

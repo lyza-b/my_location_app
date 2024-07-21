@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_location_app/features/data/repo/location_repo.dart';
+import 'package:my_location_app/features/domain/location_model.dart';
 //import 'package:http/http.dart' as http;
 //import 'package:my_location_app/features/domain/location_model.dart';
-
+final locatonRepoProvider = Provider((ref) => LocationRepo());
 class VisibilityController extends ChangeNotifier {
+
+final ChangeNotifierProviderRef ref;
+
+VisibilityController({
+  required this.ref
+});
+
+
   bool visible = false;
 
   updateVisibility() {
@@ -16,18 +26,44 @@ class VisibilityController extends ChangeNotifier {
     notifyListeners();
   }
 
-  final searchController = TextEditingController();
+    final searchController = TextEditingController();
+    List<LocationModel> list = [];
+
+    Future<List<LocationModel>> getLocation() async {
+    
+
+ 
+      list = await ref.read(locatonRepoProvider).getLocation( 
+      searchController.text);
+
+      notifyListeners();
+      return list;
+
+    
+  
+  }
 }
 
 final mainProviderCtrl = ChangeNotifierProvider<VisibilityController>(
-    (ref) => VisibilityController());
+    (ref) => VisibilityController(ref:ref));
 
 //I don't really get this part
 
 
-// class AsyncLocationNotifier extends AsyncNotifier<List<LocationModel>> {
+// final changeLocationProvider =
+//     ChangeNotifierProvider<ChangeLocationNotifier>(
+//         (ref) =>ChangeLocationNotifier());
+
+
+// class ChangeLocationNotifier extends ChangeNotifier{
 //   @override
-//   Future<List<LocationModel>> build() async {}
+//   Future<List<LocationModel>> build() async {
+//     return getLocation();
+//   }
+
+
+
+  
 // }
 
 
